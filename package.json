@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "bin": {
-    "generate-fake-commit": "./cli.js",
+    "generate-fake-commit": "./cli.js"
   },
   "keywords": [],
   "author": "",
