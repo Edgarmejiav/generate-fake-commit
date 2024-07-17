@@ -1,13 +1,12 @@
-const {execSync} = require('child_process');
-const fs = require('fs');
-const path = require('path');
-const {randomUUID} = require('crypto');
-const simpleGit = require('simple-git');
-const readline = require('readline');
+import fs from 'fs';
+import path from 'path';
+import { randomUUID } from 'crypto';
+import simpleGit from 'simple-git';
 
-class FakeGit {
+
+export class FakeGit {
     constructor() {
-        this.projectDir = path.resolve(path.dirname(__filename));
+        this.projectDir = process.cwd();
         this.minCommits = 1;
         this.maxCommits = 10;
         this.repo = null;
@@ -20,7 +19,7 @@ class FakeGit {
         const repoPath = path.join(this.projectDir, this.repoName);
         if (!fs.existsSync(repoPath)) {
             console.log("[Error]: Repo not found. Creating new one from remote-url");
-            fs.mkdirSync(repoPath, {recursive: true});
+            fs.mkdirSync(repoPath, { recursive: true });
             this.repo = simpleGit(repoPath);
             await this.repo.clone(this.remoteUrl, repoPath);
         } else {
@@ -36,7 +35,6 @@ class FakeGit {
         process.env.GIT_COMMITTER_DATE = actionDate;
         this.repo.raw(['commit', '--allow-empty', '-m', randomUUID(), '--date', actionDate]);
     }
-
 
     async singleCommit(year, month, day) {
         const currentDate = new Date(year, month - 1, day);
@@ -76,36 +74,3 @@ class FakeGit {
     }
 }
 
-(async () => {
-    const fakeGit = new FakeGit();
-    await fakeGit.loadRepo();
-
-    const rl = readline.createInterface({
-        input: process.stdin, output: process.stdout
-    });
-
-    rl.question("1.Create single commit\n2.Range of commits\n>> ", async (answer) => {
-        if (answer === '1') {
-            rl.question("Date in format YYYY/MM/DD\n>> ", async (date) => {
-                const providedData = date.split("/").map(x => parseInt(x));
-                await fakeGit.singleCommit(providedData[0], providedData[1], providedData[2]);
-                await fakeGit.gitPush();
-                rl.close();
-            });
-        } else {
-    rl.question("Start date in format YYYY/MM/DD\n>> ", async (startDate = "2020/01/01") => {
-        rl.question("Stop date in format YYYY/MM/DD\n>> ", async (stopDate = "2020/03/01") => {
-            const start = "2020/01/01".split("/").map(x => parseInt(x));
-            const stop =  "2020/03/01".split("/").map(x => parseInt(x));
-
-            const start_date = new Date(start[0], start[1] - 1, start[2]);
-            const stop_date = new Date(stop[0], stop[1] - 1, stop[2]);
-
-            await fakeGit.manyCommits(start_date, stop_date);
-            await fakeGit.gitPush();
-            rl.close();
-        });
-    });
-    }
-    });
-})();

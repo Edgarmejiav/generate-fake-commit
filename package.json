@@ -2,14 +2,16 @@
   "name": "generate-fake-commit",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "bin": {
+    "generate-fake-commit": "./cli.js",
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "meow": "^13.2.0",
     "simple-git": "^3.25.0"
-  }
+  },
+  "type": "module"
 }
