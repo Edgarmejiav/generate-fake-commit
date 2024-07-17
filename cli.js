@@ -5,10 +5,11 @@ import {FakeGit}  from './index.js';
 
 const cli = meow(`
     Usage
-      $ generate-fake-commit --single --date <YYYY/MM/DD>
-      $ generate-fake-commit --range --start <YYYY/MM/DD> --stop <YYYY/MM/DD>
+      $ generate-fake-commit --remoteurl --single --date <YYYY/MM/DD>
+      $ generate-fake-commit --remoteurl --range --start <YYYY/MM/DD> --stop <YYYY/MM/DD>
 
     Options
+      --remoteurl, -u  Remote URL for git repository
       --single, -s  Create a single commit
       --range, -r   Create commits over a date range
       --date, -d    Date for single commit (format: YYYY/MM/DD)
@@ -21,6 +22,10 @@ const cli = meow(`
 `, {
     importMeta: import.meta,
     flags: {
+        remoteurl: {
+            type: 'string',
+            shortFlag: 'u' // Update alias to shortFlag
+        },
         single: {
             type: 'boolean',
             shortFlag: 's' // Update alias to shortFlag
@@ -46,10 +51,22 @@ const cli = meow(`
 
 
 (async () => {
-    const fakeGit = new FakeGit();
+    if(!cli.flags.remoteurl) {
+        console.error("Please provide a remote URL using --remoteurl");
+        process.exit(1);
+    }
+
+    const fakeGit = new FakeGit(
+        {
+            remoteUrl: cli.flags.remoteurl
+        }
+    );
+    fakeGit.remoteUrl = cli.flags.remoteurl;
     await fakeGit.loadRepo();
 
     if (cli.flags.single) {
+        // url is required
+
         if (!cli.flags.date) {
             console.error("Please provide a date using --date <YYYY/MM/DD>");
             process.exit(1);

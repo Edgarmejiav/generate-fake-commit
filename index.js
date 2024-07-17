@@ -5,16 +5,15 @@ import simpleGit from 'simple-git';
 
 
 export class FakeGit {
-    constructor() {
+    constructor({minCommits = 1, maxCommits = 10, remoteUrl = ""}) {
         this.projectDir = process.cwd();
-        this.minCommits = 1;
-        this.maxCommits = 10;
+        this.minCommits = minCommits;
+        this.maxCommits = maxCommits;
         this.repo = null;
-        this.remoteUrl = "git@github.com:Edgarmejiav/my-git.git";
+        this.remoteUrl = remoteUrl;
         this.repoName = this.remoteUrl.split('/').pop().split('.')[0];
         console.log("[Info]: Starting");
     }
-
     async loadRepo() {
         const repoPath = path.join(this.projectDir, this.repoName);
         if (!fs.existsSync(repoPath)) {
