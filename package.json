@@ -6,7 +6,7 @@
     "generate-fake-commit": "./cli.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "edgarmejiav",
   "license": "ISC",
   "description": "",
   "dependencies": {
