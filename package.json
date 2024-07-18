@@ -1,6 +1,6 @@
 {
   "name": "generate-fake-commit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "bin": {
     "generate-fake-commit": "./cli.js"
@@ -8,6 +8,14 @@
   "author": "edgarmejiav",
   "license": "ISC",
   "description": "Tool for generating fake commits in a Git repository.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Edgarmejiav/generate-fake-commit",
+    "directory": "generate-fake-commit",
+    "branch": "main",
+    "web": "https://github.com/Edgarmejiav/generate-fake-commit",
+    "short": "Edgarmejiav/generate-fake-commit"
+  },
   "keywords": [
     "git",
     "commit",
