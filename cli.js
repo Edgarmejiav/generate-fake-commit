@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import meow from 'meow';
-import {FakeGit}  from './index.js';
+import {FakeGit} from './index.js';
 
 const cli = meow(`
     Usage
@@ -9,6 +9,8 @@ const cli = meow(`
       $ generate-fake-commit --remoteurl <URLGIT> --range --start <YYYY/MM/DD> --stop <YYYY/MM/DD>
 
     Options
+      --mincommits, -m  Minimum number of commits to generate
+      --maxcommits, -M  Maximum number of commits to generate
       --remoteurl, -u  Remote URL for git repository
       --single, -s  Create a single commit
       --range, -r   Create commits over a date range
@@ -20,47 +22,37 @@ const cli = meow(`
       $ generate-fake-commit --single --date 2024/07/17
       $ generate-fake-commit --range --start 2024/07/10 --stop 2024/07/17
 `, {
-    importMeta: import.meta,
-    flags: {
+    importMeta: import.meta, flags: {
         remoteurl: {
-            type: 'string',
-            shortFlag: 'u' // Update alias to shortFlag
-        },
-        single: {
-            type: 'boolean',
-            shortFlag: 's' // Update alias to shortFlag
-        },
-        range: {
-            type: 'boolean',
-            shortFlag: 'r' // Update alias to shortFlag
-        },
-        date: {
-            type: 'string',
-            shortFlag: 'd' // Update alias to shortFlag
-        },
-        start: {
-            type: 'string',
-            shortFlag: 'a' // Update alias to shortFlag
-        },
-        stop: {
-            type: 'string',
-            shortFlag: 'o' // Update alias to shortFlag
+            type: 'string', shortFlag: 'u' // Update alias to shortFlag
+        }, single: {
+            type: 'boolean', shortFlag: 's' // Update alias to shortFlag
+        }, range: {
+            type: 'boolean', shortFlag: 'r' // Update alias to shortFlag
+        }, date: {
+            type: 'string', shortFlag: 'd' // Update alias to shortFlag
+        }, start: {
+            type: 'string', shortFlag: 'a' // Update alias to shortFlag
+        }, stop: {
+            type: 'string', shortFlag: 'o' // Update alias to shortFlag
+        }, mincommits: {
+            type: 'number', shortFlag: 'm', default: 1
+        }, maxcommits: {
+            type: 'number', shortFlag: 'M', default: 10
         }
     }
 });
 
 
 (async () => {
-    if(!cli.flags.remoteurl) {
+    if (!cli.flags.remoteurl) {
         console.error("Please provide a remote URL using --remoteurl");
         process.exit(1);
     }
 
-    const fakeGit = new FakeGit(
-        {
-            remoteUrl: cli.flags.remoteurl
-        }
-    );
+    const fakeGit = new FakeGit({
+        remoteUrl: cli.flags.remoteurl, minCommits: cli.flags.mincommits, maxCommits: cli.flags.maxcommits
+    });
     fakeGit.remoteUrl = cli.flags.remoteurl;
     await fakeGit.loadRepo();
 
