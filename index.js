@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { randomUUID } from 'crypto';
+import {randomUUID} from 'crypto';
 import simpleGit from 'simple-git';
 
 
@@ -14,11 +14,12 @@ export class FakeGit {
         this.repoName = this.remoteUrl.split('/').pop().split('.')[0];
         console.log("[Info]: Starting");
     }
+
     async loadRepo() {
         const repoPath = path.join(this.projectDir, this.repoName);
         if (!fs.existsSync(repoPath)) {
             console.log("[Error]: Repo not found. Creating new one from remote-url");
-            fs.mkdirSync(repoPath, { recursive: true });
+            fs.mkdirSync(repoPath, {recursive: true});
             this.repo = simpleGit(repoPath);
             await this.repo.clone(this.remoteUrl, repoPath);
         } else {
@@ -32,7 +33,10 @@ export class FakeGit {
         const actionDate = new Date(year, month - 1, day).toISOString();
         process.env.GIT_AUTHOR_DATE = actionDate;
         process.env.GIT_COMMITTER_DATE = actionDate;
-        this.repo.raw(['commit', '--allow-empty', '-m', randomUUID(), '--date', actionDate]);
+        const emoji = this.getRandomEmoji();
+        const uuid = randomUUID();
+        const commitMessage = `${emoji} : ${uuid}`;
+        this.repo.raw(['commit', '--allow-empty', '-m', commitMessage, '--date', actionDate]);
     }
 
     async singleCommit(year, month, day) {
@@ -71,5 +75,13 @@ export class FakeGit {
     randomIntFromInterval(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
+
+    getRandomEmoji() {
+        const emojis = ["🎉", "✨", "🐛", "🚀"];
+        const randomIndex = Math.floor(Math.random() * emojis.length);
+        return emojis[randomIndex];
+    }
+
+
 }
 
