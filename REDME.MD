@@ -19,3 +19,6 @@ npx generate-fake-commit --remoteurl <URLGIT> --range --start <YYYY/MM/DD> --sto
 | `--date`      | `-d`  | 📆 Date for a single commit (format: YYYY/MM/DD)                                |
 | `--start`     | `-a`  | 🕒 Start date for range commits (format: YYYY/MM/DD)                            |
 | `--stop`      | `-o`  | ⏳ End date for range commits (format: YYYY/MM/DD)                              |
+
+## 📦 to import
+After execution, navigate to the repository folder and perform a git push to update the remote repository. 🚀💻
