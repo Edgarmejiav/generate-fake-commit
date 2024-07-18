@@ -5,7 +5,6 @@ repository. It's useful for testing purposes or to spice up your contribution gr
 
 [![npm](https://img.shields.io/npm/v/generate-fake-commit)](https://www.npmjs.com/package/generate-fake-commit)
 [![npm](https://img.shields.io/npm/dt/generate-fake-commit)](https://www.npmjs.com/package/generate-fake-commit)
-[![GitHub](https://img.shields.io/github/license/rodrigobastosv/generate-fake-commit)]
 [![npm version](https://badge.fury.io/js/generate-fake-commit.svg)](https://badge.fury.io/js/generate-fake-commit)
 
 
