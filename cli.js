@@ -91,4 +91,6 @@ const cli = meow(`
         console.error("Please provide either --single or --range flag");
         process.exit(1);
     }
+    console.log("cd " + fakeGit.repoName);
+    console.log("git push --force");
 })();
