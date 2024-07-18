@@ -2,6 +2,8 @@
 
 Welcome to **generate-fake-commit**! 🎉 This is a CLI (Command Line Interface) for generating fake commits in a git
 repository. It's useful for testing purposes or to spice up your contribution graph. 😜
+Made for educational purposes 😅
+
 
 ![image](https://github.com/user-attachments/assets/ec31651e-5c86-45be-974c-c53e5d0d39d4)
 
