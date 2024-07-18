@@ -86,7 +86,7 @@ const cli = meow(`
         const stop_date = new Date(stop[0], stop[1] - 1, stop[2]);
 
         await fakeGit.manyCommits(start_date, stop_date);
-        await fakeGit.gitPush();
+        // await fakeGit.gitPush();
     } else {
         console.error("Please provide either --single or --range flag");
         process.exit(1);
