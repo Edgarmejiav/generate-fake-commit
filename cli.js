@@ -24,17 +24,17 @@ const cli = meow(`
 `, {
     importMeta: import.meta, flags: {
         remoteurl: {
-            type: 'string', shortFlag: 'u' // Update alias to shortFlag
+            type: 'string', shortFlag: 'u'
         }, single: {
-            type: 'boolean', shortFlag: 's' // Update alias to shortFlag
+            type: 'boolean', shortFlag: 's'
         }, range: {
-            type: 'boolean', shortFlag: 'r' // Update alias to shortFlag
+            type: 'boolean', shortFlag: 'r'
         }, date: {
-            type: 'string', shortFlag: 'd' // Update alias to shortFlag
+            type: 'string', shortFlag: 'd'
         }, start: {
-            type: 'string', shortFlag: 'a' // Update alias to shortFlag
+            type: 'string', shortFlag: 'a'
         }, stop: {
-            type: 'string', shortFlag: 'o' // Update alias to shortFlag
+            type: 'string', shortFlag: 'o'
         }, mincommits: {
             type: 'number', shortFlag: 'm', default: 1
         }, maxcommits: {
@@ -57,8 +57,6 @@ const cli = meow(`
     await fakeGit.loadRepo();
 
     if (cli.flags.single) {
-        // url is required
-
         if (!cli.flags.date) {
             console.error("Please provide a date using --date <YYYY/MM/DD>");
             process.exit(1);
