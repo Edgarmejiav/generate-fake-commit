@@ -5,8 +5,8 @@ import {FakeGit}  from './index.js';
 
 const cli = meow(`
     Usage
-      $ generate-fake-commit --remoteurl --single --date <YYYY/MM/DD>
-      $ generate-fake-commit --remoteurl --range --start <YYYY/MM/DD> --stop <YYYY/MM/DD>
+      $ generate-fake-commit --remoteurl <URLGIT> --single --date <YYYY/MM/DD>
+      $ generate-fake-commit --remoteurl <URLGIT> --range --start <YYYY/MM/DD> --stop <YYYY/MM/DD>
 
     Options
       --remoteurl, -u  Remote URL for git repository
@@ -73,7 +73,7 @@ const cli = meow(`
         }
         const providedData = cli.flags.date.split("/").map(x => parseInt(x));
         await fakeGit.singleCommit(providedData[0], providedData[1], providedData[2]);
-        await fakeGit.gitPush();
+        // await fakeGit.gitPush();
     } else if (cli.flags.range) {
         if (!cli.flags.start || !cli.flags.stop) {
             console.error("Please provide start and stop dates using --start <YYYY/MM/DD> and --stop <YYYY/MM/DD>");
